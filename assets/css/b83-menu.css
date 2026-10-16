@@ -1,0 +1,16 @@
+/* b83 – gemeinsames Menü und Übersichtsseite aller b83-Plugins */
+
+/* Das Logo enthält Klammern und Schrift: etwas größer als Standard-Icons */
+#toplevel_page_b83 .wp-menu-image.svg { background-size: 24px auto !important; }
+
+.b83-overview__head { display: flex; align-items: center; gap: 16px; margin: 16px 0 24px; }
+.b83-overview__head img { width: 64px; height: 64px; }
+.b83-overview__head h1 { margin: 0; padding: 0; }
+.b83-overview__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; max-width: 1100px; }
+.b83-overview__card { background: #fff; border: 1px solid #c3c4c7; border-radius: 6px; padding: 16px 18px; }
+.b83-overview__card h2 { margin: 0 0 6px; font-size: 16px; }
+.b83-overview__meta { color: #646970; font-size: 12px; margin: 0 0 10px; }
+.b83-overview__status { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 11px; margin-left: 6px; vertical-align: middle; }
+.b83-overview__status.is-on { background: #e7f7ee; color: #116329; }
+.b83-overview__status.is-off { background: #f0f0f1; color: #50575e; }
+.b83-overview__foot { margin-top: 28px; color: #646970; }

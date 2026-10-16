@@ -1,0 +1,13 @@
+# Betriebssystem / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Abhängigkeiten / Builds
+/vendor/
+/node_modules/
+/dist/
+*.zip
+

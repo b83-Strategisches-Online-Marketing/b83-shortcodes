@@ -1,0 +1,67 @@
+# Erstellt automatisch ein GitHub-Release mit installierbarer ZIP-Datei,
+# sobald auf main eine neue Version im Plugin-Header steht.
+#
+# Ablauf für ein Update:
+#   1. Version in b83-shortcodes.php (Header + B83_SC_VERSION) erhöhen
+#   2. Abschnitt "## x.y.z – Datum" im CHANGELOG.md ergänzen
+#   3. Auf main pushen → Release vX.Y.Z mit b83-shortcodes.zip entsteht
+#   4. Die Websites zeigen das Update an bzw. installieren es automatisch
+
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Version lesen
+        id: version
+        run: |
+          VERSION=$(grep -m1 -E '^\s*\*\s*Version:' b83-shortcodes.php | sed -E 's/.*Version:[[:space:]]*//' | tr -d '[:space:]')
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          if git ls-remote --exit-code --tags origin "refs/tags/v$VERSION" > /dev/null; then
+            echo "Release v$VERSION existiert bereits – nichts zu tun."
+            echo "new=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "new=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Versionsangaben prüfen
+        if: steps.version.outputs.new == 'true'
+        run: |
+          echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$' || { echo "Ungültige Version: $VERSION"; exit 1; }
+          grep -q "define( 'B83_SC_VERSION', '$VERSION' )" b83-shortcodes.php || { echo "B83_SC_VERSION passt nicht zu $VERSION"; exit 1; }
+          grep -q "^## $VERSION" CHANGELOG.md || { echo "CHANGELOG.md hat keinen Abschnitt für $VERSION"; exit 1; }
+          for f in $(find . -name '*.php' -not -path './.git/*'); do php -l "$f" > /dev/null || exit 1; done
+
+      - name: ZIP bauen
+        if: steps.version.outputs.new == 'true'
+        run: |
+          mkdir -p build/b83-shortcodes
+          git archive HEAD | tar -x -C build/b83-shortcodes
+          rm -rf build/b83-shortcodes/.github build/b83-shortcodes/.gitignore build/b83-shortcodes/CLAUDE.md build/b83-shortcodes/tests
+          (cd build && zip -qr ../b83-shortcodes.zip b83-shortcodes)
+          awk -v v="$VERSION" 'index($0, "## " v) == 1 {f=1; next} /^## / {f=0} f' CHANGELOG.md > notes.md
+
+      - name: Release veröffentlichen
+        if: steps.version.outputs.new == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v$VERSION" b83-shortcodes.zip \
+            --title "b83 Shortcodes $VERSION" \
+            --notes-file notes.md \
+            --target "$GITHUB_SHA"
