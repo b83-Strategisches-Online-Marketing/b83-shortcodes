@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
 final class B83Menu {
 
 	public const SLUG         = 'b83';
-	public const MENU_VERSION = 2;
+	public const MENU_VERSION = 3;
 
 	/** Basis-URL und -Pfad des Plugins, das diese Kopie mitbringt. */
 	public function __construct( private string $plugin_url, private string $plugin_dir ) {}
@@ -94,6 +94,11 @@ final class B83Menu {
 			if ( is_readable( WP_PLUGIN_DIR . '/' . $folder . '/' . $relative ) ) {
 				return plugins_url( $relative, WP_PLUGIN_DIR . '/' . $file );
 			}
+		}
+		// Pro-Versionen liegen in einem anderen Ordner (z. B. …-premium): irgendein *-icon.png nehmen.
+		$found = glob( WP_PLUGIN_DIR . '/' . $folder . '/assets/img/*-icon.png' );
+		if ( is_array( $found ) && ! empty( $found ) ) {
+			return plugins_url( 'assets/img/' . basename( (string) $found[0] ), WP_PLUGIN_DIR . '/' . $file );
 		}
 		return '';
 	}
@@ -168,7 +173,7 @@ final class B83Menu {
 			echo '<div class="b83-overview__card">';
 			$icon = $this->plugin_icon_url( (string) $file );
 			if ( '' !== $icon ) {
-				echo '<img class=\"b83-overview__icon\" src=\"' . esc_url( $icon ) . '\" alt=\"\" width=\"48\" height=\"48\">';
+				echo '<img class="b83-overview__icon" src="' . esc_url( $icon ) . '" alt="" width="48" height="48">';
 			}
 			echo '<h2>' . esc_html( (string) $data['Name'] );
 			printf(

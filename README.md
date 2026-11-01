@@ -6,7 +6,7 @@ WordPress-Plugin, um eigene Shortcodes mit HTML, CSS und JavaScript zu verwalten
 
 Entwickelt von [b83 – Strategisches Online Marketing](https://b83.at), Wolfgang Grabs-Schrempf, office@b83.at.
 
-- **Version:** 2.2.0
+- **Version:** 2.2.1
 - **Voraussetzungen:** WordPress 6.2+, PHP 8.1+
 - **Lizenz:** GPL-2.0-or-later
 
