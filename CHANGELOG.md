@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.0 – 2026-11-01
+
+### Neu
+- b83-Menü (Version 2): Übersicht und Menüpunkte zeigen das Icon jedes b83-Plugins
+
 ## 2.1.0 – 2026-11-01
 
 ### Neu

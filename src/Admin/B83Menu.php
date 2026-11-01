@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
 final class B83Menu {
 
 	public const SLUG         = 'b83';
-	public const MENU_VERSION = 1;
+	public const MENU_VERSION = 2;
 
 	/** Basis-URL und -Pfad des Plugins, das diese Kopie mitbringt. */
 	public function __construct( private string $plugin_url, private string $plugin_dir ) {}
@@ -76,6 +76,45 @@ final class B83Menu {
 	/** Stile für Menü-Icon (alle Admin-Seiten) und Übersichtsseite. */
 	public function enqueue(): void {
 		wp_enqueue_style( 'b83-menu', $this->plugin_url . 'assets/css/b83-menu.css', array(), (string) self::MENU_VERSION );
+		wp_add_inline_style( 'b83-menu', $this->submenu_icon_css() );
+	}
+
+	/**
+	 * Icon eines installierten b83-Plugins (leer, wenn keines vorhanden).
+	 *
+	 * @param string $file Plugin-Datei relativ zum Plugin-Ordner.
+	 */
+	private function plugin_icon_url( string $file ): string {
+		$folder = dirname( $file );
+		if ( '.' === $folder || '' === $folder ) {
+			return '';
+		}
+		$candidates = array( 'assets/img/icon.svg', 'assets/img/icon-128x128.png', 'assets/img/' . $folder . '-icon.png' );
+		foreach ( $candidates as $relative ) {
+			if ( is_readable( WP_PLUGIN_DIR . '/' . $folder . '/' . $relative ) ) {
+				return plugins_url( $relative, WP_PLUGIN_DIR . '/' . $file );
+			}
+		}
+		return '';
+	}
+
+	/**
+	 * Kleines Icon vor dem Menüpunkt jedes Plugins, das seine Seite über
+	 * b83_admin_plugin_links meldet.
+	 */
+	private function submenu_icon_css(): string {
+		$css = '';
+		foreach ( (array) apply_filters( 'b83_admin_plugin_links', array() ) as $file => $url ) {
+			$query = (string) wp_parse_url( (string) $url, PHP_URL_QUERY );
+			parse_str( $query, $args );
+			$page = sanitize_key( (string) ( $args['page'] ?? '' ) );
+			$icon = $this->plugin_icon_url( (string) $file );
+			if ( '' === $page || '' === $icon ) {
+				continue;
+			}
+			$css .= '#toplevel_page_b83 .wp-submenu a[href="admin.php?page=' . $page . '"]::before{content:"";background-image:url("' . esc_url_raw( $icon ) . '")}';
+		}
+		return $css;
 	}
 
 	/* ---------------------------------------------------------------------
@@ -127,6 +166,10 @@ final class B83Menu {
 		foreach ( $plugins as $file => $data ) {
 			$active = is_plugin_active( $file );
 			echo '<div class="b83-overview__card">';
+			$icon = $this->plugin_icon_url( (string) $file );
+			if ( '' !== $icon ) {
+				echo '<img class=\"b83-overview__icon\" src=\"' . esc_url( $icon ) . '\" alt=\"\" width=\"48\" height=\"48\">';
+			}
 			echo '<h2>' . esc_html( (string) $data['Name'] );
 			printf(
 				'<span class="b83-overview__status %1$s">%2$s</span>',

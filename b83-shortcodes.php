@@ -3,7 +3,7 @@
  * Plugin Name:       b83 Shortcodes
  * Plugin URI:        https://b83.at
  * Description:       Eigene Shortcodes mit HTML, CSS und JavaScript verwalten – zum Einbinden von Scripts, Widgets und Bausteinen in Elementor, im Block-Editor oder in Widgets. Keine PHP-Ausführung.
- * Version:           2.1.0
+ * Version:           2.2.0
  * Requires at least: 6.2
  * Requires PHP:      8.1
  * Author:            b83 – Wolfgang Grabs-Schrempf
@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'B83_SC_VERSION', '2.1.0' );
+define( 'B83_SC_VERSION', '2.2.0' );
 define( 'B83_SC_FILE', __FILE__ );
 define( 'B83_SC_DIR', plugin_dir_path( __FILE__ ) );
 define( 'B83_SC_URL', plugin_dir_url( __FILE__ ) );

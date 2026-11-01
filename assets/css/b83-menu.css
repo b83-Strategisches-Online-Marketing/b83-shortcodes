@@ -14,3 +14,7 @@
 .b83-overview__status.is-on { background: #e7f7ee; color: #116329; }
 .b83-overview__status.is-off { background: #f0f0f1; color: #50575e; }
 .b83-overview__foot { margin-top: 28px; color: #646970; }
+
+/* Plugin-Icons (ab Menü-Version 2): Bild und content kommen als Inline-Stil je Plugin */
+#toplevel_page_b83 .wp-submenu a::before { display: inline-block; width: 16px; height: 16px; margin: 0 6px -3px 0; background-position: center; background-size: contain; background-repeat: no-repeat; border-radius: 4px; }
+.b83-overview__icon { float: left; width: 48px; height: 48px; margin: 0 12px 8px 0; border-radius: 11px; }
