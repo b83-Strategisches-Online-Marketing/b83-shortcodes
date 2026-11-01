@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0 – 2026-11-01
+
+### Neu
+- Eigenes Icon und Banner im b83-Stil: erscheinen in der Update-Liste und unter „Details ansehen“
+- „Details ansehen“ zeigt jetzt eine Beschreibung des Plugins
+
 ## 2.0.0 – 2026-10-16
 
 Neuaufbau nach dem b83-Plugin-Standard. Bestehende Shortcodes, Namen und Daten bleiben unverändert nutzbar.

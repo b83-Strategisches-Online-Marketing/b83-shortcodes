@@ -67,6 +67,8 @@ final class Updater {
 			'package'      => $release['package'],
 			'requires_php' => '8.1',
 			'requires'     => '6.2',
+			'icons'        => $this->icons(),
+			'banners'      => $this->banners(),
 		);
 	}
 
@@ -97,8 +99,11 @@ final class Updater {
 			'requires_php'  => '8.1',
 			'last_updated'  => $release['published'],
 			'download_link' => $release['package'],
+			'icons'         => $this->icons(),
+			'banners'       => $this->banners(),
 			'sections'      => array(
-				'changelog' => $release['notes'],
+				'description' => $this->description(),
+				'changelog'   => $release['notes'],
 			),
 		);
 	}
@@ -148,6 +153,49 @@ final class Updater {
 		);
 		set_transient( self::TRANSIENT, $release, 6 * HOUR_IN_SECONDS );
 		return $release;
+	}
+
+	/**
+	 * Icons für die Update-Liste und „Details ansehen“.
+	 *
+	 * @return array<string,string>
+	 */
+	private function icons(): array {
+		$url = plugin_dir_url( B83_SC_FILE ) . 'assets/img/';
+		return array(
+			'1x'  => $url . 'icon-128x128.png',
+			'2x'  => $url . 'icon-256x256.png',
+			'svg' => $url . 'icon.svg',
+		);
+	}
+
+	/**
+	 * Banner für „Details ansehen“.
+	 *
+	 * @return array<string,string>
+	 */
+	private function banners(): array {
+		$url = plugin_dir_url( B83_SC_FILE ) . 'assets/img/';
+		return array(
+			'low'  => $url . 'banner-772x250.png',
+			'high' => $url . 'banner-1544x500.png',
+		);
+	}
+
+	/** Beschreibung für „Details ansehen“. */
+	private function description(): string {
+		$html = '';
+		$html .= '<p>' . esc_html__( 'Buchungsmasken, Bewertungen, Chat-Fenster oder Wetter-Widgets kommen meist als Script, das irgendwo auf die Seite muss. Mit b83 Shortcodes legen Sie dafür einen eigenen Shortcode an und setzen ihn in Elementor, im Block-Editor oder in einem Widget ein.', 'b83-shortcodes' ) . '</p>';
+		$html .= '<p>' . esc_html__( 'PHP-Code führt das Plugin nie aus. Im Page-Builder erscheint auf Wunsch nur ein Platzhalter, Besucher sehen die echte Ausgabe.', 'b83-shortcodes' ) . '</p>';
+		$html .= '<ul>';
+		$html .= '<li>' . esc_html__( 'Zwei Code-Felder: an der Stelle des Shortcodes und einmal am Seitenende', 'b83-shortcodes' ) . '</li>';
+		$html .= '<li>' . esc_html__( 'Shortcodes abschalten, ohne sie von den Seiten zu entfernen', 'b83-shortcodes' ) . '</li>';
+		$html .= '<li>' . esc_html__( 'Übersicht, auf welchen Seiten und Vorlagen ein Shortcode steht', 'b83-shortcodes' ) . '</li>';
+		$html .= '<li>' . esc_html__( 'Vorherige Fassung wiederherstellen, duplizieren, exportieren und importieren', 'b83-shortcodes' ) . '</li>';
+		$html .= '<li>' . esc_html__( 'Leert nach dem Speichern den Cache der betroffenen Seiten', 'b83-shortcodes' ) . '</li>';
+		$html .= '</ul>';
+		$html .= '<p>' . esc_html__( 'Ein Plugin von b83 – Strategisches Online Marketing.', 'b83-shortcodes' ) . ' <a href="https://b83.at">b83.at</a></p>';
+		return $html;
 	}
 
 	/* ---------------------------------------------------------------------

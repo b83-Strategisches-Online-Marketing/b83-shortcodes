@@ -1,10 +1,12 @@
+![](assets/img/banner-772x250.png)
+
 # b83 Shortcodes
 
 WordPress-Plugin, um eigene Shortcodes mit HTML, CSS und JavaScript zu verwalten – zum Einbinden von Scripts, Widgets (Wetter, Buchung, Chat, Bewertungen …) und Bausteinen in Elementor, im Block-Editor oder in Widgets. PHP-Code wird nie ausgeführt.
 
 Entwickelt von [b83 – Strategisches Online Marketing](https://b83.at), Wolfgang Grabs-Schrempf, office@b83.at.
 
-- **Version:** 2.0.0
+- **Version:** 2.1.0
 - **Voraussetzungen:** WordPress 6.2+, PHP 8.1+
 - **Lizenz:** GPL-2.0-or-later
 
