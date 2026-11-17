@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git branch:*)",
+      "Bash(git switch:*)",
+      "Bash(php -l:*)",
+      "Bash(composer validate:*)",
+      "Bash(vendor/bin/phpcs:*)",
+      "Bash(wp i18n make-pot:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./**/wp-config.php)",
+      "Read(./freemius/**)",
+      "Read(./vendor/**)",
+      "Read(./node_modules/**)",
+      "Read(./languages/*.mo)",
+      "Read(./**/*.zip)",
+      "Bash(git push --force:*)"
+    ]
+  }
+}

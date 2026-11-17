@@ -1,0 +1,17 @@
+# Einheitliche Zeilenenden (wichtig bei Windows und Mac im Team)
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.gif binary
+*.webp binary
+*.zip binary
+*.mo binary
+
+# Nicht ins Release-ZIP (git archive)
+CLAUDE.md          export-ignore
+.claude            export-ignore
+.gitignore         export-ignore
+.gitattributes     export-ignore
+.github            export-ignore
+phpcs.xml.dist     export-ignore
+tests              export-ignore
