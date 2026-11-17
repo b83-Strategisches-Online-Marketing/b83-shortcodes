@@ -10,7 +10,7 @@
 - **Präfix für Funktionen, Optionen, Hooks:** `b83_shortcodes_` (Namespace: `B83\Shortcodes`)
 - **Repository:** github.com/b83-Strategisches-Online-Marketing/b83-shortcodes (öffentlich)
 - **Vertrieb:** intern (Updates über GitHub-Releases)
-- **Im Einsatz auf:** {{z. B. abtenau-info.at, sporer.at}}
+- **Im Einsatz auf:** mehrere Kundenseiten
 - **Zweck in einem Satz:** Eigene Shortcodes mit HTML, CSS und JavaScript verwalten – zum Einbinden von Scripts, Widgets und Bausteinen in Elementor, im Block-Editor oder in Widgets. Keine PHP-Ausführung.
 
 ## b83-Standards (gelten für alle b83-Plugins)
@@ -89,7 +89,8 @@ Abweichungen von den b83-Standards oben. Sie bleiben bestehen, damit nichts bric
 - **Aktionen:** Schreibende Aktionen laufen über `admin-post.php` (`b83_sc_*`), nicht über AJAX. Nonce und `Capabilities::can_manage()` (`manage_options` plus `unfiltered_html`) werden in `guard()` geprüft.
 - **Ausgabe ohne Escaping:** Der Shortcode-Code wird bewusst ungefiltert ausgegeben (`Renderer`). Das ist der Zweck des Plugins und nur Benutzern mit `unfiltered_html` erlaubt. Keine PHP-Ausführung.
 - **Hooks (öffentlich, stabil):** `b83_shortcodes_loaded`, `_output`, `_footer_output`, `_is_builder_preview`, `_can_manage`, `_before_save`, `_saved`, `_deleted`, `_purge_cache`, `_purge_all`, `_purge_post_ids`.
-- **Noch offen:** `readme.txt` fehlt, `languages/` ist leer.
+- **Übersetzung:** Nicht vorgesehen. `languages/` bleibt leer, Deutsch ist die einzige Sprache.
+- **readme.txt:** Auf Deutsch, `Stable tag` gleich der aktuellen Version, Changelog nur mit der aktuellen Version. Beim Release mitpflegen.
 
 ### Bisherige Projektregeln (aus dem früheren CLAUDE.md übernommen)
 
